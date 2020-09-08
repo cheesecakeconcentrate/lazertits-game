@@ -48,9 +48,8 @@ function love.load()
   intro_text = file:read()
   file:close()
 
-  song = love.audio.newSource("music/Karstenholymoly_-_Liberation.mp3",
-                              "stream")
-  song:setVolume(0.1)
+  song = love.audio.newSource("music/Rolemusic_-_01_-_Spell.mp3", "stream")
+  song:setVolume(0.05)
   song:setLooping(true)
 
   SoundBoard:init()
@@ -170,7 +169,7 @@ end
 function introtext_keypressed(key)
   if key == 'return' then
     game_state = "GAMEPLAY"
-    -- song:play()
+    song:play()
   end
 end
 
