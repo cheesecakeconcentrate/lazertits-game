@@ -57,7 +57,7 @@ function HypnoSpiral:draw_circular(startx, starty)
     local y = (math.sin(angle) * radius) + starty
     if (prevx > 0) and (prevy > 0) then
       love.graphics.setColor(math.random(), math.random(), math.random(),
-                             0.3)
+                             0.3 * math.abs(math.sin(start_angle)))
       love.graphics.line(prevx, prevy, x, y)
     end
     prevx = x
