@@ -123,6 +123,8 @@ function gameplay_keypressed(key)
     stage.state = "STARS"
   elseif key == '2' then
     stage.state = "CHAMBER"
+  elseif key == '3' then
+    stage.state = "FOREST"
   end
 
 

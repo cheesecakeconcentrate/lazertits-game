@@ -28,3 +28,5 @@ by **HORNY ALTER EGO GAMES**.
   * [classic](https://github.com/rxi/classic) class library for lua by rxi
   * [Möan](https://love2d.org/forums/viewtopic.php?f=5&t=84110) dialog box
   system for LÖVE
+  * other assets
+    * [forest background](https://edermunizz.itch.io/pixel-art-forest) by edermunizz
