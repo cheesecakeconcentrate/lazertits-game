@@ -136,6 +136,9 @@ function gameplay_keypressed(key)
       SoundBoard:loseyourself()
     end
   end
+  if key == 'space' then
+    player.shoot(player)
+  end
   if key == 'x' then
     SoundBoard:loseyourself()
   end

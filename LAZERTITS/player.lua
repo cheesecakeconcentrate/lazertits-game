@@ -12,6 +12,7 @@ function Player.new(self, x, y)
   self.pchypno_sheet = Animation("animations/pchypno_1.png", 4)
   self.pcidle_sheet = Animation("animations/pcidle_2.png", 4)
   self.pcmove_sheet = Animation("animations/pcmove_2.png", 4)
+  self.pcshoot_sheet = Animation("animations/pcshoot.png", 5)
 end
 
 function Player.hypno(self)
@@ -26,6 +27,10 @@ function Player.idle(self)
   self.state = "IDLE"
 end
 
+function Player.shoot(self)
+  self.state = "SHOOT"
+end
+
 function Player.draw(self)
     love.graphics.setColor(1, 1, 1, 1)
 
@@ -38,8 +43,14 @@ function Player.draw(self)
       -- move offset for center of hips is: 89, 64
       self.pcmove_sheet.draw(self.pcmove_sheet, timer,
                              self.x - 89, self.y - 64)
-    else
+    elseif player.state == "SHOOT" then
+      -- shoot offset for center of hips is: 68, 95
+      self.pcshoot_sheet.draw(self.pcshoot_sheet, timer,
+                             self.x - 68, self.y - 90)
+    elseif player.state == "IDLE" then
       self.pcidle_sheet.draw(self.pcidle_sheet, timer,
                              self.x - 70, self.y - 92)
+    else
+      print("this seems wrong")
     end
 end
