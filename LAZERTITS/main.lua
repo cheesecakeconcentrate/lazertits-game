@@ -7,13 +7,16 @@ show_hitboxes = true
 
 timer = 0
 
+local lasers = {}
+
 function love.load()
-  Object = require "classic"
   require "animation"
   require "player"
-  Entity = require "entity"
   Enemy = require "enemy"
+  Entity = require "entity"
   EvilQueen = require "evilqueen"
+  Laser = require "laser"
+  Object = require "classic"
   Stage = require "stage"
 
   Moan = require("Moan")
@@ -22,7 +25,6 @@ function love.load()
   Moan.typeSound:setVolume(0.1)
   avatar = love.graphics.newImage("stills/player_dialogue2.png")
   avatar2 = love.graphics.newImage("stills/queen_dialogue.png")
-
 
   hypno_spiral = require("hypno_spiral")
   soundboard = require("soundboard")
@@ -89,6 +91,11 @@ function love.draw()
 
     player.draw(player)
     evilqueen.draw(evilqueen)
+
+    for k,laser in pairs(lasers) do
+      laser.draw(laser)
+    end
+
     Moan.draw()
   end
 end
@@ -127,7 +134,6 @@ function gameplay_keypressed(key)
     stage.state = "FOREST"
   end
 
-
   if key == "z" then
     if player.state == "HYPNO" then
       player.idle(player)
@@ -138,7 +144,10 @@ function gameplay_keypressed(key)
   end
   if key == 'space' then
     player.shoot(player)
+    local laser = Laser(player.x + 30, player.y - 25)
+    table.insert(lasers, laser)
   end
+
   if key == 'x' then
     SoundBoard:loseyourself()
   end
@@ -235,6 +244,14 @@ function love.update(dt)
     evilqueen.x = evilqueen.x + player_dx * dt
     evilqueen.y = evilqueen.y + player_dy * dt
 
+  end
+
+  for k,laser in pairs(lasers) do
+    if (laser.x > love.graphics.getWidth() or laser.x < 0) then
+      table.remove(lasers, k)
+    end
+
+    laser.x = laser.x + (400 * dt)
   end
 
   stage.update(stage, dt)
