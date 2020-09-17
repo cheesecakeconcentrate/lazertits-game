@@ -7,6 +7,14 @@ EvilQueen = Enemy.extend(Enemy)
 
 local queenhypno_sheet = Animation("animations/queenhypno.png", 4)
 
+function EvilQueen.new(self, x, y)
+  self.x = x
+  self.y = y
+  self.width = 90
+  self.height = 160
+  self.state = "IDLE"
+end
+
 function EvilQueen.draw(self)
     EvilQueen.super.draw(self)
 

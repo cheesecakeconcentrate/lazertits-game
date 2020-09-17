@@ -8,6 +8,7 @@ show_hitboxes = true
 timer = 0
 
 local lasers = {}
+local enemies = {}
 
 function love.load()
   require "animation"
@@ -30,7 +31,8 @@ function love.load()
   soundboard = require("soundboard")
 
   player = Player(200, 300)
-  evilqueen = EvilQueen(550, 300, 50, 60)
+  local evilqueen = EvilQueen(550, 300)
+  table.insert(enemies, evilqueen)
 
   stage = Stage()
 
@@ -90,7 +92,9 @@ function love.draw()
     stage.draw(stage)
 
     player.draw(player)
-    evilqueen.draw(evilqueen)
+    for k,enemy in pairs(enemies) do
+      enemy.draw(enemy)
+    end
 
     for k,laser in pairs(lasers) do
       laser.draw(laser)
@@ -192,68 +196,67 @@ function love.update(dt)
 
   timer = timer + dt * 10.0
 
+  stage.update(stage, dt)
+  Moan.update(dt)
   if Moan.showingMessage then
-    player_dx = 0
-    player_dy = 0
+    return
   end
 
   -- this is a bit gross
   -- can we move this into the keypressed event?
   local moving = false
-  if not Moan.showingMessage then
-    if love.keyboard.isDown("left") then
-      player_dx = -400
-      moving = true
-    end
-    if love.keyboard.isDown("right") then
-      player_dx = 400
-      moving = true
-    end
-    if love.keyboard.isDown("up") then
-      player_dy = -400
-      moving = true
-    end
-    if love.keyboard.isDown("down") then
-      player_dy = 400
-      moving = true
-    end
 
-    if not moving then
-      if player_dx > 0 then
-        player_dx = player_dx - 20
-      elseif player_dx < 0 then
-        player_dx = player_dx + 20
-      end
-      if player_dy > 0 then
-        player_dy = player_dy - 20
-      elseif player_dy < 0 then
-        player_dy = player_dy + 20
-      end
+  if love.keyboard.isDown("left") then
+    player_dx = -400
+    moving = true
+  end
+  if love.keyboard.isDown("right") then
+    player_dx = 400
+    moving = true
+  end
+  if love.keyboard.isDown("up") then
+    player_dy = -400
+    moving = true
+  end
+  if love.keyboard.isDown("down") then
+    player_dy = 400
+    moving = true
+  end
+
+  if not moving then
+    if player_dx > 0 then
+      player_dx = player_dx - 20
+    elseif player_dx < 0 then
+      player_dx = player_dx + 20
     end
-    if moving then
-      player.move(player)
-    else
-      if player.state == "MOVE" then
-        player.idle(player)
-      end
+    if player_dy > 0 then
+      player_dy = player_dy - 20
+    elseif player_dy < 0 then
+      player_dy = player_dy + 20
     end
+  end
+  if moving then
+    player.move(player)
+  else
+    if player.state == "MOVE" then
+      player.idle(player)
+    end
+  end
 
-    player.x = player.x + player_dx * dt
-    player.y = player.y + player_dy * dt
+  player.x = player.x + player_dx * dt
+  player.y = player.y + player_dy * dt
 
-    evilqueen.x = evilqueen.x + player_dx * dt
-    evilqueen.y = evilqueen.y + player_dy * dt
-
+  for k,enemy in pairs(enemies) do
+    -- XXX: have each kind of enemy decide how it moves
+    enemy.x = enemy.x + player_dx * dt
+    enemy.y = enemy.y + player_dy * dt
   end
 
   for k,laser in pairs(lasers) do
     if (laser.x > love.graphics.getWidth() or laser.x < 0) then
       table.remove(lasers, k)
     end
-
     laser.x = laser.x + (400 * dt)
   end
 
-  stage.update(stage, dt)
-  Moan.update(dt)
 end
