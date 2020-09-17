@@ -13,6 +13,7 @@ local enemies = {}
 function love.load()
   require "animation"
   require "player"
+  require "physics_util"
   Enemy = require "enemy"
   Entity = require "entity"
   EvilQueen = require "evilqueen"
@@ -248,14 +249,23 @@ function love.update(dt)
 
   for k,enemy in pairs(enemies) do
     -- XXX: have each kind of enemy decide how it moves
-    enemy.x = enemy.x + player_dx * dt
-    enemy.y = enemy.y + player_dy * dt
+    -- enemy.x = enemy.x + player_dx * dt
+    -- enemy.y = enemy.y + player_dy * dt
+    enemy.move(enemy, player, dt)
   end
 
   for k,laser in pairs(lasers) do
     if (laser.x > love.graphics.getWidth() or laser.x < 0) then
       table.remove(lasers, k)
     end
+
+    for enemyk,enemy in pairs(enemies) do
+      if collides(laser, enemy) then
+        -- enemy.hit()
+        print("collision")
+      end
+    end
+
     laser.x = laser.x + (400 * dt)
   end
 
