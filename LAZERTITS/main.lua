@@ -40,9 +40,6 @@ function love.load()
   splash_screen = love.graphics.newImage("stills/splash1_5.png")
   splash_screen2 = love.graphics.newImage("stills/splash2_transparent.png")
 
-  enemy1_sprite = love.graphics.newImage("stills/enemy1.png") 
-  king_sprite = love.graphics.newImage("stills/king.png") 
-
   mainFont = love.graphics.newFont("Pixel_NES.otf", 20)
   love.graphics.setFont(mainFont)
 
@@ -262,7 +259,8 @@ function love.update(dt)
     for enemyk,enemy in pairs(enemies) do
       if collides(laser, enemy) then
         -- enemy.hit()
-        print("collision")
+        enemy.gethit(enemy)
+        table.remove(lasers, k)
       end
     end
 
