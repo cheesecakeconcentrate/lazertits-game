@@ -30,3 +30,4 @@ by **HORNY ALTER EGO GAMES**.
   system for LÖVE
   * other assets
     * [forest background](https://edermunizz.itch.io/pixel-art-forest) by edermunizz
+    * some lasers and explosions by [Kenney](http://www.kenney.nl), (CC0 1.0)

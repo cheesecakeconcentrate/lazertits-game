@@ -11,7 +11,7 @@ function Entity.new(self, x, y, width, height)
 end
 
 function Entity.draw(self)
-    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.setColor(1, 1, 1, 0.5)
     love.graphics.circle("fill", self.x, self.y, 10, 10)
 
     love.graphics.rectangle("line",

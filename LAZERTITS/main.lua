@@ -9,19 +9,21 @@ timer = 0
 
 local lasers = {}
 local enemies = {}
+local sparks = {}
 
 function love.load()
   require "animation"
   require "player"
   require "physics_util"
+  Hitspark = require "hitspark"
   Enemy = require "enemy"
   Entity = require "entity"
   EvilQueen = require "evilqueen"
   Laser = require "laser"
   Object = require "classic"
   Stage = require "stage"
-
   Moan = require("Moan")
+
   Moan.font = love.graphics.newFont("Pixel_NES.otf", 20)
   Moan.typeSound = love.audio.newSource("sfx/typeSound.wav", "static")
   Moan.typeSound:setVolume(0.1)
@@ -96,6 +98,10 @@ function love.draw()
 
     for k,laser in pairs(lasers) do
       laser.draw(laser)
+    end
+
+    for k,spark in pairs(sparks) do
+      spark.draw(spark)
     end
 
     Moan.draw()
@@ -251,6 +257,13 @@ function love.update(dt)
     enemy.move(enemy, player, dt)
   end
 
+  for k,spark in pairs(sparks) do
+    local spark_alive = spark.update(spark)
+    if not spark_alive then
+      table.remove(sparks, k)
+    end
+  end
+
   for k,laser in pairs(lasers) do
     if (laser.x > love.graphics.getWidth() or laser.x < 0) then
       table.remove(lasers, k)
@@ -258,13 +271,15 @@ function love.update(dt)
 
     for enemyk,enemy in pairs(enemies) do
       if collides(laser, enemy) then
-        -- enemy.hit()
         enemy.gethit(enemy)
+
+        local spark = Hitspark(laser.x + laser.width, laser.y)
+        table.insert(sparks, spark)
         table.remove(lasers, k)
       end
     end
 
-    laser.x = laser.x + (400 * dt)
+    laser.x = laser.x + (1000 * dt)
   end
 
 end

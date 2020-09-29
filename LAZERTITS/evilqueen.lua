@@ -19,6 +19,7 @@ end
 
 function EvilQueen.draw(self)
     EvilQueen.super.draw(self)
+    love.graphics.setColor(1, 1, 1)
 
     if self.state == "HYPNO" then
       -- center of queen's hips is 58,92
@@ -37,6 +38,7 @@ function EvilQueen.draw(self)
       queenidle_sheet.draw(queenidle_sheet, timer,
                              self.x - 45, self.y - 92, true)
     elseif self.state == "HIT" then
+      love.graphics.setColor(1, 1, 1, 0.5)
       queenhit_sheet.draw(queenhit_sheet, timer,
                              self.x - 45, self.y - 92, true)
     else

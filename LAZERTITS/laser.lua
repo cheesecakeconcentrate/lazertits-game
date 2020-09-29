@@ -15,6 +15,7 @@ end
 
 function Laser.draw(self)
     Laser.super.draw(self)
+    love.graphics.setColor(1, 1, 1)
     love.graphics.draw(sprite, self.x - self.width / 2,
                                self.y - self.height / 2,
                                0, 0.5, 0.5)
