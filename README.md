@@ -19,6 +19,7 @@ by **HORNY ALTER EGO GAMES**.
   * [importantbusinessdinosaur](https://importantbusinessdinosaur.tumblr.com/):
   character designs, still art, sprites and animations
   * [SlaveHypnoSlut](https://slavehypnoslut.bdsmlr.com/): voice actress!
+  * [JT Meyer](http://www.trancescript.com/): additional writing, story help
 
 ## other acknowledgements
   * character concept inspired by this image from
