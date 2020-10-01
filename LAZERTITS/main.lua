@@ -196,6 +196,12 @@ function introtext_keypressed(key)
 end
 
 function love.update(dt)
+  if game_state == "GAMEPLAY" then
+    gameplay_update(dt)
+  end
+end
+
+function gameplay_update(dt)
   HypnoSpiral:update(dt)
 
   timer = timer + dt * 10.0
@@ -251,9 +257,6 @@ function love.update(dt)
   player.y = player.y + player_dy * dt
 
   for k,enemy in pairs(enemies) do
-    -- XXX: have each kind of enemy decide how it moves
-    -- enemy.x = enemy.x + player_dx * dt
-    -- enemy.y = enemy.y + player_dy * dt
     enemy.move(enemy, player, dt)
   end
 
