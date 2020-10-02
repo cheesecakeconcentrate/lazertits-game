@@ -10,7 +10,7 @@ function SoundBoard:init()
 end
 
 function SoundBoard:loseyourself()
-    love.audio.play(sound)
+    love.audio.play(loseyourself)
 end
 
 function SoundBoard:laser()
