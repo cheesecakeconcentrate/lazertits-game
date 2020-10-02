@@ -164,15 +164,9 @@ function gameplay_keypressed(key)
   end
   if key == 'space' then
     player.shoot(player)
+    SoundBoard:laser() 
     local laser = Laser(player.x + 30, player.y - 25)
     table.insert(lasers, laser)
-  end
-
-  if key == 'x' then
-    SoundBoard:loseyourself()
-  end
-  if key == 'v' then
-    SoundBoard:loseyourself2()
   end
 
   if key == 'm' then

@@ -32,3 +32,5 @@ by **HORNY ALTER EGO GAMES**.
   * other assets
     * [forest background](https://edermunizz.itch.io/pixel-art-forest) by edermunizz
     * some lasers and explosions by [Kenney](http://www.kenney.nl), (CC0 1.0)
+    * sound effects from FreeSound.org
+      * [jobro's laser shot](https://freesound.org/people/jobro/sounds/35686/) (CC-BY 3.0)
