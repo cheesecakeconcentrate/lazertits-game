@@ -10,6 +10,7 @@ timer = 0
 local lasers = {}
 local enemies = {}
 local sparks = {}
+local current_level = 1
 
 function love.load()
   require "animation"
@@ -33,7 +34,7 @@ function love.load()
   hypno_spiral = require("hypno_spiral")
   soundboard = require("soundboard")
 
-  player = Player(200, 300)
+  player = Player(100, 300)
   local evilqueen = EvilQueen(550, 300)
   table.insert(enemies, evilqueen)
 
@@ -86,15 +87,24 @@ function love.draw()
   elseif game_state == "INTROTEXT" then
     green_text(intro_text, 10, 10)
 
+  elseif game_state == "LEVEL_INTRO" then
+    stage.draw(stage)
+    green_text("LEVEL 0: OUTER SPACE OUTRAGE", 180, 100)
+    green_text("PRESS ENTER TO BEGIN", 240, 400)
+    green_text("arrow keys: fly\n" ..
+               "space bar: shoot\n" ..
+               "z: hypno-spiral", 270, 450)
+    player.draw(player)
+
   elseif game_state == "GAMEPLAY" then
     -- green_text("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
 
     stage.draw(stage)
 
-    player.draw(player)
     for k,enemy in pairs(enemies) do
       enemy.draw(enemy)
     end
+    player.draw(player)
 
     for k,laser in pairs(lasers) do
       laser.draw(laser)
@@ -124,6 +134,8 @@ function love.keypressed(key)
     splash_keypressed(key)
   elseif game_state == "INTROTEXT" then
     introtext_keypressed(key)
+  elseif game_state == "LEVEL_INTRO" then
+    level_intro_keypressed(key)
   end
 end
 
@@ -190,22 +202,35 @@ end
 
 function introtext_keypressed(key)
   if key == 'return' then
-    game_state = "GAMEPLAY"
+    game_state = "LEVEL_INTRO"
+    player.x = love.graphics.getWidth() / 2
+    player.y = love.graphics.getHeight() / 2
     song:play()
   end
 end
 
+function level_intro_keypressed(key)
+  if key == 'return' then
+    player.x = 100
+    player.y = 300
+    game_state = "GAMEPLAY"
+  end
+end
+
 function love.update(dt)
+  timer = timer + dt * 10.0
+
   if game_state == "GAMEPLAY" then
     gameplay_update(dt)
+  elseif game_state == "LEVEL_INTRO" then
+    stage.update(stage, dt)
+  elseif game_state == "THANKYOU" then
+    HypnoSpiral:update(dt)
+    stage.update(stage, dt)
   end
 end
 
 function gameplay_update(dt)
-  HypnoSpiral:update(dt)
-
-  timer = timer + dt * 10.0
-
   stage.update(stage, dt)
   Moan.update(dt)
   if Moan.showingMessage then
