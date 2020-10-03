@@ -11,6 +11,7 @@ local lasers = {}
 local enemies = {}
 local sparks = {}
 local current_level = 1
+local player = nil
 
 function love.load()
   require "animation"

@@ -34,20 +34,20 @@ end
 function Player.draw(self)
     love.graphics.setColor(1, 1, 1, 1)
 
-    if player.state == "HYPNO" then
+    if self.state == "HYPNO" then
       -- hypno offset for center of hips is: 46, 82
       self.pchypno_sheet.draw(self.pchypno_sheet, timer,
                               self.x - 56, self.y - 82)
       HypnoSpiral:draw_cone(self.x + 115 - 46, self.y + 55 - 82)
-    elseif player.state == "MOVE" then
+    elseif self.state == "MOVE" then
       -- move offset for center of hips is: 89, 64
       self.pcmove_sheet.draw(self.pcmove_sheet, timer,
                              self.x - 89, self.y - 64)
-    elseif player.state == "SHOOT" then
+    elseif self.state == "SHOOT" then
       -- shoot offset for center of hips is: 68, 95
       self.pcshoot_sheet.draw(self.pcshoot_sheet, timer,
                              self.x - 68, self.y - 90)
-    elseif player.state == "IDLE" then
+    elseif self.state == "IDLE" then
       self.pcidle_sheet.draw(self.pcidle_sheet, timer,
                              self.x - 70, self.y - 92)
     else
