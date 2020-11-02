@@ -41,6 +41,10 @@ function EvilQueen.draw(self)
       love.graphics.setColor(1, 1, 1, 0.5)
       queenhit_sheet.draw(queenhit_sheet, timer,
                              self.x - 45, self.y - 92, true)
+    elseif self.state == "DYING" then
+      love.graphics.setColor(1, 1, 1, 0.5)
+      queenhit_sheet.draw(queenhit_sheet, timer,
+                             self.x - 45, self.y - 92, true)
     else
       print("this seems wrong")
     end

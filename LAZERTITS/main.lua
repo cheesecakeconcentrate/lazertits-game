@@ -300,6 +300,17 @@ function gameplay_update(dt)
   player.y = player.y + player_dy * dt
 
   for k,enemy in pairs(enemies) do
+    -- check for death
+    if enemy.state == "DYING" and enemy.hitstun == 0 then
+      table.remove(enemies, k)
+
+      if table.getn(enemies) == 0 then
+        level_position = level_position + 1
+        if level_position > table.getn(LevelSequences[current_level]) then
+          game_state = "THANKYOU"
+        end
+      end
+    end
     enemy.move(enemy, player, dt)
   end
 
