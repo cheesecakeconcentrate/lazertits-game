@@ -11,6 +11,7 @@ local lasers = {}
 local enemies = {}
 local sparks = {}
 local current_level = 1
+local level_position = 1
 local player = nil
 
 function love.load()
@@ -25,6 +26,7 @@ function love.load()
   Object = require "classic"
   Stage = require "stage"
   Moan = require("Moan")
+  LevelSequences = require("level_sequences")
 
   Moan.font = love.graphics.newFont("Pixel_NES.otf", 20)
   Moan.typeSound = love.audio.newSource("sfx/typeSound.wav", "static")
@@ -36,9 +38,6 @@ function love.load()
   soundboard = require("soundboard")
 
   player = Player(100, 300)
-  local evilqueen = EvilQueen(550, 300)
-  table.insert(enemies, evilqueen)
-
   stage = Stage()
 
   splash_screen = love.graphics.newImage("stills/splash1_5.png")
@@ -225,12 +224,36 @@ function love.update(dt)
   end
 end
 
+function add_enemy(kind, x, y)
+  if kind == "evilqueen" then
+    local evilqueen = EvilQueen(x, y)
+    table.insert(enemies, evilqueen)
+  end
+end
+
+function maybe_add_enemies()
+  if table.getn(enemies) == 0 then
+    for k, tuple in pairs(LevelSequences[current_level][level_position]) do
+      local kind = tuple[1]
+      local x = tuple[2]
+      local y = tuple[3]
+
+      if x == 0 then
+        x = love.graphics.getWidth()
+      end
+      add_enemy(kind, x, y)
+    end
+  end
+end
+
 function gameplay_update(dt)
   stage.update(stage, dt)
   Moan.update(dt)
   if Moan.showingMessage then
     return
   end
+
+  maybe_add_enemies()
 
   -- this is a bit gross
   -- can we move this into the keypressed event?
