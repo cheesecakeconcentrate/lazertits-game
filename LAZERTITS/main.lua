@@ -8,6 +8,7 @@ show_hitboxes = true
 timer = 0
 
 local lasers = {}
+local spirals = {}
 local enemies = {}
 local sparks = {}
 local current_level = 1
@@ -23,6 +24,7 @@ function love.load()
   Entity = require "entity"
   EvilQueen = require "evilqueen"
   Laser = require "laser"
+  SpiralHitbox = require "spiral_hitbox"
   Object = require "classic"
   Stage = require "stage"
   Moan = require("Moan")
@@ -104,10 +106,21 @@ function love.draw()
     for k,enemy in pairs(enemies) do
       enemy.draw(enemy)
     end
+
     player.draw(player)
 
     for k,laser in pairs(lasers) do
       laser.draw(laser)
+    end
+
+    -- remove all the spiral hitboxes if we're not in HYPNO state.
+    if player.state ~= "HYPNO" then
+      for k,v in pairs(spirals) do
+        spirals[k]=nil
+      end
+    end
+    for k,spiral in pairs(spirals) do
+      spiral.draw(spiral)
     end
 
     for k,spark in pairs(sparks) do
@@ -145,7 +158,6 @@ function love.keyreleased(key)
 end
 
 function gameplay_keypressed(key)
-
   if key == '1' then
     stage.state = "STARS"
   elseif key == '2' then
@@ -159,6 +171,8 @@ function gameplay_keypressed(key)
       player.idle(player)
     else
       player.hypno(player)
+      local spiral = SpiralHitbox(player.x + 110, player.y - 30)
+      table.insert(spirals, spiral)
       SoundBoard:loseyourself()
     end
   end
@@ -298,6 +312,11 @@ function gameplay_update(dt)
 
   player.x = player.x + player_dx * dt
   player.y = player.y + player_dy * dt
+  -- spiral hitboxes move with you if you're skidding
+  for k,spiral in pairs(spirals) do
+    spiral.x = player.x + 110
+    spiral.y = player.y - 30
+  end
 
   for k,enemy in pairs(enemies) do
     -- check for death
