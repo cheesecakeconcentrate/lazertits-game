@@ -344,7 +344,6 @@ function gameplay_update(dt)
     if (laser.x > love.graphics.getWidth() or laser.x < 0) then
       table.remove(lasers, k)
     end
-
     for enemyk,enemy in pairs(enemies) do
       if collides(laser, enemy) then
         enemy.gethit(enemy)
@@ -356,6 +355,14 @@ function gameplay_update(dt)
     end
 
     laser.x = laser.x + (1000 * dt)
+  end
+
+  for k,spiral in pairs(spirals) do
+    for enemyk,enemy in pairs(enemies) do
+      if collides(spiral, enemy) then
+        enemy.getspiraled(enemy)
+      end
+    end
   end
 
 end

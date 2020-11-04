@@ -55,4 +55,15 @@ function Enemy.gethit(self)
   end
 end
 
+function Enemy.getspiraled(self)
+  self.hitstun = 30
+  self.will = self.will - 1
+
+  if self.will <= 0 then
+    self.state = "DYING"
+  else
+    self.state = "HIT"
+  end
+end
+
 return Enemy
