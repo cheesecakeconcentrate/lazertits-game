@@ -3,11 +3,12 @@ local Level_Sequences = {
   {
     -- wave 1
     {
-      {"evilqueen", 0, 200}
+      {"claws", 0, 200},
+      {"claws", 0, 400}
     },
     -- wave 2
     {
-      {"evilqueen", 0, 200}
+      {"claws", 0, 200}
     }
   }
 }

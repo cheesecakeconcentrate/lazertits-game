@@ -23,6 +23,7 @@ function love.load()
   Enemy = require "enemy"
   Entity = require "entity"
   EvilQueen = require "evilqueen"
+  Claws = require "claws"
   Laser = require "laser"
   SpiralHitbox = require "spiral_hitbox"
   Object = require "classic"
@@ -242,6 +243,9 @@ function add_enemy(kind, x, y)
   if kind == "evilqueen" then
     local evilqueen = EvilQueen(x, y)
     table.insert(enemies, evilqueen)
+  elseif kind == "claws" then
+    local claws = Claws(x, y)
+    table.insert(enemies, claws)
   end
 end
 
