@@ -25,15 +25,15 @@ function Claws.draw(self)
                                        0, -1, 1)
     elseif self.state == "HIT" then
       love.graphics.setColor(1, 1, 1, 0.5)
-      local jitter_x = math.random(-10, 10)
-      local jitter_y = math.random(-10, 10)
+      local jitter_x = math.random(-5, 5)
+      local jitter_y = math.random(-5, 5)
       love.graphics.draw(claws_sprite, self.x + self.width / 2 + jitter_x,
                                        self.y - self.height / 2 + jitter_y,
                                        0, -1, 1)
     elseif self.state == "DYING" then
       love.graphics.setColor(1, 1, 1, 0.5)
-      local jitter_x = math.random(-10, 10)
-      local jitter_y = math.random(-10, 10)
+      local jitter_x = math.random(-5, 5)
+      local jitter_y = math.random(-5, 5)
       love.graphics.draw(claws_sprite, self.x + self.width / 2 + jitter_x,
                                        self.y - self.height / 2 + jitter_y,
                                        0, -1, 1)

@@ -334,7 +334,8 @@ function gameplay_update(dt)
         end
       end
     end
-    enemy.move(enemy, player, dt)
+
+    enemy.move(enemy, player, enemies, dt)
   end
 
   for k,spark in pairs(sparks) do
