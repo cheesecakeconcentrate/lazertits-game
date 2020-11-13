@@ -24,6 +24,8 @@ function love.load()
   Entity = require "entity"
   EvilQueen = require "evilqueen"
   Claws = require "claws"
+  SmallGun = require "smallgun"
+  BigGun = require "biggun"
   Laser = require "laser"
   SpiralHitbox = require "spiral_hitbox"
   Object = require "classic"
@@ -246,6 +248,12 @@ function add_enemy(kind, x, y)
   elseif kind == "claws" then
     local claws = Claws(x, y)
     table.insert(enemies, claws)
+  elseif kind == "smallgun" then
+    local smallgun = SmallGun(x, y)
+    table.insert(enemies, smallgun)
+  elseif kind == "biggun" then
+    local biggun = BigGun(x, y)
+    table.insert(enemies, biggun)
   end
 end
 
