@@ -11,6 +11,7 @@ function SmallGun.new(self, x, y)
 
   self.width = self.sprite:getWidth()
   self.height = self.sprite:getHeight()
+  self.speed = 100
   self.state = "IDLE"
 end
 

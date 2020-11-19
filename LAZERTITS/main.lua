@@ -265,7 +265,7 @@ function maybe_add_enemies()
       local y = tuple[3]
 
       if x == 0 then
-        x = love.graphics.getWidth()
+        x = love.graphics.getWidth() + math.random(0, 20)
       end
       add_enemy(kind, x, y)
     end

@@ -18,6 +18,7 @@ function Enemy.new(self, x, y)
   self.hitstun = 0
   self.health = 3
   self.will = 1
+  self.speed = 100
 end
 
 function sign(x)
@@ -45,15 +46,16 @@ function Enemy.move(self, player, enemies, dt)
     end
   end
 
+  local right_of_player_x = player.x + 100
   -- we want to chase the player
-  local my_dx = 100 * sign((player.x + 100) - self.x)
-  local my_dy = 100 * sign(player.y - self.y)
+  local my_dx = self.speed * sign(right_of_player_x - self.x)
+  local my_dy = self.speed * sign(player.y - self.y)
 
   -- don't jitter.
-  if math.abs(my_dx) < 2 then
+  if math.abs(right_of_player_x - self.x) < 5 then
     my_dx = 0
   end
-  if math.abs(my_dy) < 2 then
+  if math.abs(player.y - self.y) < 5 then
     my_dy = 0
   end
 

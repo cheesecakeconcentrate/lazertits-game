@@ -14,6 +14,7 @@ function EvilQueen.new(self, x, y)
 
   self.width = 90
   self.height = 160
+  self.speed = 200
   self.state = "IDLE"
 end
 
