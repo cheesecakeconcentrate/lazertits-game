@@ -20,6 +20,8 @@
 
 local utf8 = require("utf8")
 
+require "scaling"
+
 -------------------------------------------------
 -- Main configuration table
 --
@@ -313,9 +315,9 @@ function Moan.draw()
     local padding = 10
 
     local boxH = 118
-    local boxW = love.graphics.getWidth()-(2*padding)
+    local boxW = Scaling:get_width()-(2*padding)
     local boxX = padding
-    local boxY = love.graphics.getHeight()-(boxH+padding)
+    local boxY = Scaling:get_height()-(boxH+padding)
     if Moan.UI.messageboxPos == "top" then boxY = 10 end
 
     local fontHeight = Moan.font:getHeight(" ")

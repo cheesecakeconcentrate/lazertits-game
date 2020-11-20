@@ -19,6 +19,7 @@ function love.load()
   require "animation"
   require "player"
   require "physics_util"
+  require "scaling"
   Hitspark = require "hitspark"
   Enemy = require "enemy"
   Entity = require "entity"
@@ -51,7 +52,7 @@ function love.load()
   mainFont = love.graphics.newFont("Pixel_NES.otf", 20)
   love.graphics.setFont(mainFont)
 
-  love.window.setMode(800, 600)
+  Scaling:set_window_size()
 
   file = love.filesystem.newFile("text/intro.txt")
   file:open("r")
@@ -72,8 +73,9 @@ function green_text(text, x, y)
   love.graphics.setColor(1.0, 1.0, 1.0)
 end
 
-
 function love.draw()
+  Scaling:scale_graphics()
+  
   if game_state == "SPLASH" then
     love.graphics.draw(splash_screen, 0, 0)
     green_text("empress lazertits!", 250, 20)
@@ -138,6 +140,17 @@ end
 function love.keypressed(key)
   if key == "escape" then
     love.event.quit()
+  end
+
+  if key == "-" then
+    Scaling:decrease_size()
+  elseif (key == "+" or
+          key == "kp+"
+          or (key == "=" and (love.keyboard.isDown("lshift") or
+                              love.keyboard.isDown("rshift")))) then
+    Scaling:increase_size()
+  elseif key == "=" then
+    Scaling:reset_size()
   end
 
   if Moan.showingMessage then
@@ -214,8 +227,8 @@ end
 function introtext_keypressed(key)
   if key == 'return' then
     game_state = "LEVEL_INTRO"
-    player.x = love.graphics.getWidth() / 2
-    player.y = love.graphics.getHeight() / 2
+    player.x = Scaling:get_width() / 2
+    player.y = Scaling:get_height() / 2
     song:play()
   end
 end
@@ -265,7 +278,7 @@ function maybe_add_enemies()
       local y = tuple[3]
 
       if x == 0 then
-        x = love.graphics.getWidth() + math.random(0, 20)
+        x = Scaling:get_width() + math.random(0, 20)
       end
       add_enemy(kind, x, y)
     end
@@ -354,7 +367,7 @@ function gameplay_update(dt)
   end
 
   for k,laser in pairs(lasers) do
-    if (laser.x > love.graphics.getWidth() or laser.x < 0) then
+    if (laser.x > Scaling:get_width() or laser.x < 0) then
       table.remove(lasers, k)
     end
     for enemyk,enemy in pairs(enemies) do
