@@ -45,6 +45,7 @@ end
 
 function Stage.drawChamber(self)
   -- good for the fight versus the evil queen
+  math.randomseed(os.time())
   love.graphics.setColor(math.random(), math.random(), math.random(), 0.2)
 
   local center_x = Scaling:get_width() / 2
