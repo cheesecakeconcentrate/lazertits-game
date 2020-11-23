@@ -1,7 +1,7 @@
 Scaling = {}
 
-local x_scale = 1.0
-local y_scale = 1.0
+local x_scale = 0.8
+local y_scale = 0.8
 
 local WIDTH = 1600
 local HEIGHT = 1200
@@ -19,8 +19,8 @@ function Scaling:set_window_size()
 end
 
 function Scaling:reset_size()
-  x_scale = 1.0
-  y_scale = 1.0
+  x_scale = 0.8
+  y_scale = 0.8
   Scaling:set_window_size()
 end
 
