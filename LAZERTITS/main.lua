@@ -49,7 +49,7 @@ function love.load()
   splash_screen = love.graphics.newImage("stills/splash1_5.png")
   splash_screen2 = love.graphics.newImage("stills/splash2_transparent.png")
 
-  mainFont = love.graphics.newFont("Pixel_NES.otf", 20)
+  mainFont = love.graphics.newFont("Pixel_NES.otf", 40)
   love.graphics.setFont(mainFont)
 
   Scaling:set_window_size()
@@ -77,30 +77,30 @@ function love.draw()
   Scaling:scale_graphics()
   
   if game_state == "SPLASH" then
-    love.graphics.draw(splash_screen, 0, 0)
-    green_text("empress lazertits!", 250, 20)
-    green_text("press enter to begin", 280, 100)
+    love.graphics.draw(splash_screen, 0, 0, 0, 2.0, 2.0)
+    green_text("empress lazertits!", 560, 40)
+    green_text("press enter to begin", 560, 200)
   elseif game_state == "THANKYOU" then
     stage.drawChamber(stage)
     love.graphics.setColor(1, 1, 1)
-    love.graphics.draw(splash_screen2, 0, 0)
-    HypnoSpiral:draw_circular(321, 232)
-    HypnoSpiral:draw_circular(514, 232)
+    love.graphics.draw(splash_screen2, 0, 0, 0, 2.0, 2.0)
+    HypnoSpiral:draw_circular(321 * 2, 232 * 2)
+    HypnoSpiral:draw_circular(514 * 2, 232 * 2)
 
-    green_text("thank you for playing", 270, 15)
-    green_text("empress lazertits\npre-alpha demo", 20, 500)
-    green_text("horny alter-ego games\n2020", 475, 500)
+    green_text("thank you for playing", 540, 30)
+    green_text("empress lazertits\npre-alpha demo", 40, 1000)
+    green_text("horny alter-ego games\n2020", 950, 1000)
 
   elseif game_state == "INTROTEXT" then
     green_text(intro_text, 10, 10)
 
   elseif game_state == "LEVEL_INTRO" then
     stage.draw(stage)
-    green_text("LEVEL 0: OUTER SPACE OUTRAGE", 180, 100)
-    green_text("PRESS ENTER TO BEGIN", 240, 400)
+    green_text("LEVEL 0: OUTER SPACE OUTRAGE", 360, 200)
+    green_text("PRESS ENTER TO BEGIN", 480, 800)
     green_text("arrow keys: fly\n" ..
                "space bar: shoot\n" ..
-               "z: hypno-spiral", 270, 450)
+               "z: hypno-spiral", 540, 900)
     player.draw(player)
 
   elseif game_state == "GAMEPLAY" then

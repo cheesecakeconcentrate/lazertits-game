@@ -1,6 +1,7 @@
 Object = require "classic"
 
 require "stars"
+require "scaling"
 
 Stage = Object.extend(Object)
 
@@ -45,11 +46,14 @@ end
 function Stage.drawChamber(self)
   -- good for the fight versus the evil queen
   love.graphics.setColor(math.random(), math.random(), math.random(), 0.2)
+
+  local center_x = Scaling:get_width() / 2
+  local center_y = Scaling:get_height() / 2
   love.graphics.draw(self.entangled,
-                     400, 300,
+                     center_x, center_y,
                      self.radians,
-                     1000.0 / self.entangled:getWidth(),
-                     1000.0 / self.entangled:getHeight(),
+                     2000.0 / self.entangled:getWidth(),
+                     2000.0 / self.entangled:getHeight(),
                      self.entangled:getWidth()/2,
                      self.entangled:getHeight()/2)
 end
@@ -57,13 +61,16 @@ end
 function Stage.drawForest(self)
   love.graphics.setColor(1.0, 1.0, 1.0)
 
-  love.graphics.draw(self.forest_layers[1], 0, 0)
+  love.graphics.draw(self.forest_layers[1], 0, 0, 0, 2.0, 2.0)
 
   for i=1,3 do
-    love.graphics.draw(self.forest_layers[i+1], self.scrolls[i], 0)
+    -- we're stretching out the pixel forest to be double-tall but only
+    -- single-wide right now. It looks OK, kind of alien and spindley, which is
+    -- maybe alright?
+    love.graphics.draw(self.forest_layers[i+1], self.scrolls[i], 0, 0, 1.0, 2.0)
     love.graphics.draw(self.forest_layers[i+1],
                        self.scrolls[i] + self.forest_layers[i+1]:getWidth(),
-                       0)
+                       0, 0, 1.0, 2.0)
   end
 end
 

@@ -51,7 +51,7 @@ function HypnoSpiral:draw_circular(startx, starty)
   local my_start_angle = start_angle / 10
   math.randomseed(0)
   -- for angle=my_start_angle,(my_start_angle+1500*math.pi),0.1 do
-  for angle=my_start_angle,(my_start_angle+35*math.pi),0.1 do
+  for angle=my_start_angle,(my_start_angle+70*math.pi),0.1 do
     local radius = 1 + (angle - my_start_angle)
     local x = (math.cos(angle) * radius) + startx
     local y = (math.sin(angle) * radius) + starty
