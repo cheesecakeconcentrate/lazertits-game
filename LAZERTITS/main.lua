@@ -88,8 +88,8 @@ function love.draw()
     HypnoSpiral:draw_circular(514 * 2, 232 * 2)
 
     green_text("thank you for playing", 540, 30)
-    green_text("empress lazertits\npre-alpha demo", 40, 1000)
-    green_text("horny alter-ego games\n2020", 950, 1000)
+    green_text("empress lazertits\nearly demo", 40, 1000)
+    green_text("horny alter-ego games\n2021", 950, 1000)
 
   elseif game_state == "INTROTEXT" then
     green_text(intro_text, 10, 10)
