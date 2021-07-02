@@ -46,13 +46,13 @@ function Enemy.move(self, player, enemies, dt)
     end
   end
 
-  local right_of_player_x = player.x + 100
+  local off_screen_x = -(100 + self.width) -- player.x + 100
   -- we want to chase the player
-  local my_dx = self.speed * sign(right_of_player_x - self.x)
+  local my_dx = self.speed * sign(off_screen_x - self.x)
   local my_dy = self.speed * sign(player.y - self.y)
 
   -- don't jitter.
-  if math.abs(right_of_player_x - self.x) < 5 then
+  if math.abs(off_screen_x - self.x) < 5 then
     my_dx = 0
   end
   if math.abs(player.y - self.y) < 5 then
@@ -78,6 +78,11 @@ function Enemy.move(self, player, enemies, dt)
 
   self.x = math.floor(self.x + my_dx * dt)
   self.y = math.floor(self.y + my_dy * dt)
+
+  -- wrap!!
+  if self.x < -(self.width) then
+    self.x = Scaling:get_width() + math.random(0, 20)
+  end
 end
 
 function Enemy.gethit(self)

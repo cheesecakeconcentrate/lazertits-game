@@ -11,7 +11,7 @@ function Claws.new(self, x, y)
 
   self.width = self.sprite:getWidth()
   self.height = self.sprite:getHeight()
-  self.speed = 200
+  self.speed = 300
   self.state = "IDLE"
 end
 
