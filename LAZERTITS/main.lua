@@ -132,6 +132,8 @@ function love.draw()
       spark.draw(spark)
     end
 
+    draw_status_bar()
+
     Moan.draw()
   end
 end
@@ -283,6 +285,21 @@ function maybe_add_enemies()
       add_enemy(kind, x, y)
     end
   end
+end
+
+function draw_status_bar()
+    love.graphics.setColor(0.2, 0.2, 0.2, 0.5)
+    love.graphics.rectangle("fill", 0, 1050, 500, 160)
+    green_text("health", 10, 1070)
+    love.graphics.setColor(1, 0, 0)
+    for i=1,player.health do
+      love.graphics.circle("fill", 180 + (30 * i), 1095, 10, 8)
+    end
+    green_text("will", 10, 1130)
+    love.graphics.setColor(0, 0, 1)
+    for i=1,player.will do
+      love.graphics.circle("fill", 180 + (30 * i), 1155, 10, 8)
+    end
 end
 
 function gameplay_update(dt)

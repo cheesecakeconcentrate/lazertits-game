@@ -7,6 +7,10 @@ Player = Object.extend(Object)
 function Player.new(self, x, y)
   self.x = x
   self.y = y
+
+  self.health = 5
+  self.will = 5
+
   self.state = "IDLE"
 
   self.pchypno_sheet = Animation("animations/pchypno_1.png", 4)
