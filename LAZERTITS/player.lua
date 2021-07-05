@@ -7,6 +7,8 @@ Player = Object.extend(Object)
 function Player.new(self, x, y)
   self.x = x
   self.y = y
+  self.height = 150
+  self.width = 50
 
   self.health = 5
   self.will = 5
@@ -25,14 +27,20 @@ end
 
 function Player.move(self)
   self.state = "MOVE"
+  self.height = 80
+  self.width = 100
 end
 
 function Player.idle(self)
   self.state = "IDLE"
+  self.height = 150
+  self.width = 50
 end
 
 function Player.shoot(self)
   self.state = "SHOOT"
+  self.height = 150
+  self.width = 50
 end
 
 function Player.draw(self)
@@ -57,4 +65,10 @@ function Player.draw(self)
     else
       print("this seems wrong")
     end
+
+    love.graphics.rectangle("line",
+                            self.x - (self.width/2),
+                            self.y - (self.height/2),
+                            self.width,
+                            self.height)
 end

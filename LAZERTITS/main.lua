@@ -408,4 +408,14 @@ function gameplay_update(dt)
     end
   end
 
+  for enemyk,enemy in pairs(enemies) do
+    -- not all enemies should have a hitbox, but if they do...
+    if collides(player, enemy) then
+      SoundBoard:gethit()
+      -- XXX: need a notion of hitstun so you don't just lose all your health at
+      -- once
+      player.health = player.health - 1
+    end
+  end
+
 end
