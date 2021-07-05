@@ -19,6 +19,8 @@ function Enemy.new(self, x, y)
   self.health = 3
   self.will = 1
   self.speed = 100
+
+  self.wave_angle = math.random(0, 2*math.pi)
 end
 
 function sign(x)
@@ -33,9 +35,6 @@ end
 
 
 function Enemy.move(self, player, enemies, dt)
-  -- simple chase behavior
-  -- except we want to get a little to the right of the player
-
   if self.hitstun > 0 then
     self.hitstun = self.hitstun - 1
 
@@ -45,6 +44,40 @@ function Enemy.move(self, player, enemies, dt)
       return
     end
   end
+
+  -- self.wrapping_chase(self, player, enemies, dt)
+  self.wrapping_wave(self, player, enemies, dt)
+end
+
+function Enemy.wrapping_wave(self, player, enemies, dt)
+  -- simple wave behavior
+  -- except we wrap to the other side and always want to move left
+
+  self.wave_angle = self.wave_angle + dt
+
+  local off_screen_x = -(100 + self.width)
+  local my_dx = self.speed * sign(off_screen_x - self.x)
+  local my_dy = self.speed * math.sin(self.wave_angle)
+
+  self.x = math.floor(self.x + my_dx * dt)
+  self.y = math.floor(self.y + my_dy * dt)
+  if self.y < 0 then
+    self.y = 0
+  end
+  if self.y > Scaling:get_height() then
+    self.y = Scaling:get_height()
+  end
+
+  -- wrap!!
+  if self.x < -(self.width) then
+    self.x = Scaling:get_width() + math.random(0, 20)
+    self.y = math.random(0, Scaling:get_height())
+  end
+end
+
+function Enemy.wrapping_chase(self, player, enemies, dt)
+  -- simple chase behavior
+  -- except we wrap to the other side and always want to move left
 
   local off_screen_x = -(100 + self.width) -- player.x + 100
   -- we want to chase the player
@@ -82,6 +115,7 @@ function Enemy.move(self, player, enemies, dt)
   -- wrap!!
   if self.x < -(self.width) then
     self.x = Scaling:get_width() + math.random(0, 20)
+    self.y = math.random(0, Scaling:get_height())
   end
 end
 
