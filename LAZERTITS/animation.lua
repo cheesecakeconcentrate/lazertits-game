@@ -35,6 +35,13 @@ function Animation.draw(self, timer, x, y, mirrored)
   love.graphics.draw(self.spritesheet,
                      self.quads[(math.floor(timer) % self.frames) + 1],
                      x, y, rotation, scale_x, scale_y)
+end
 
-
+function Animation.draw_big(self, timer, x, y)
+  scale_x = 4
+  scale_y = 4
+  love.graphics.setColor(1, 1, 1, 1)
+  love.graphics.draw(self.spritesheet,
+                     self.quads[(math.floor(timer) % self.frames) + 1],
+                     x, y, rotation, scale_x, scale_y)
 end

@@ -102,7 +102,6 @@ function love.draw()
                "space bar: shoot\n" ..
                "z: hypno-spiral", 540, 900)
     player.draw(player)
-
   elseif game_state == "GAMEPLAY" then
     -- green_text("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
 
@@ -135,6 +134,9 @@ function love.draw()
     draw_status_bar()
 
     Moan.draw()
+  elseif game_state == "CUTSCENE" then
+    player.pchypno_sheet.draw_big(player.pchypno_sheet, timer,
+                                  200, 300)
   end
 end
 
@@ -216,6 +218,9 @@ function gameplay_keypressed(key)
 
   if key == "return" then
     game_state = "THANKYOU"
+  end
+  if key == "4" then
+    game_state = "CUTSCENE"
   end
 
 end
