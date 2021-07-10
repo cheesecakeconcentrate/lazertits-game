@@ -37,11 +37,15 @@ function Animation.draw(self, timer, x, y, mirrored)
                      x, y, rotation, scale_x, scale_y)
 end
 
-function Animation.draw_big(self, timer, x, y)
+function Animation.draw_big(self, timer, x, y, frame_indices)
+  -- frame_indices is a list of indexes into the spritesheet. this is silly.
+  frame_to_show = frame_indices[(math.floor(timer) %
+                                 table.getn(frame_indices)) + 1]
+  print(frame_to_show)
+
   scale_x = 4
   scale_y = 4
   love.graphics.setColor(1, 1, 1, 1)
-  love.graphics.draw(self.spritesheet,
-                     self.quads[(math.floor(timer) % self.frames) + 1],
+  love.graphics.draw(self.spritesheet, self.quads[frame_to_show],
                      x, y, rotation, scale_x, scale_y)
 end

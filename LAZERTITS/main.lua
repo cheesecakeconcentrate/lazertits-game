@@ -135,8 +135,22 @@ function love.draw()
 
     Moan.draw()
   elseif game_state == "CUTSCENE" then
-    player.pchypno_sheet.draw_big(player.pchypno_sheet, timer,
-                                  200, 300)
+    local frame_indices = {1, 2, 3, 4,
+                           1, 2, 3, 4,
+                           1, 2, 3, 4,
+                           1, 2, 3, 4,
+                           1, 2, 3, 4,
+                           1, 2, 3, 4,
+                           5, 6, 7, 8,
+                           5, 6, 7, 8,
+                           5, 6, 7, 8,
+                           5, 6, 7, 8,
+                           5, 6, 7, 8,
+                           5, 6, 7, 8}
+                            
+    player.pchypnoboth_sheet.draw_big(player.pchypnoboth_sheet, timer,
+                                      200, 300,
+                                      frame_indices)
   end
 end
 

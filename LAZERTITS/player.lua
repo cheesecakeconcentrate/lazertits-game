@@ -16,6 +16,8 @@ function Player.new(self, x, y)
   self.state = "IDLE"
 
   self.pchypno_sheet = Animation("animations/pchypno_1.png", 4)
+  self.pcwobble_sheet = Animation("animations/pchypno.png", 4)
+  self.pchypnoboth_sheet = Animation("animations/pchypno_both.png", 8)
   self.pcidle_sheet = Animation("animations/pcidle_2.png", 4)
   self.pcmove_sheet = Animation("animations/pcmove_2.png", 4)
   self.pcshoot_sheet = Animation("animations/pcshoot.png", 5)
