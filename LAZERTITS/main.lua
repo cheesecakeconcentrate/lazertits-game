@@ -14,6 +14,9 @@ local sparks = {}
 local current_level = 1
 local level_position = 1
 local player = nil
+local avatar = nil
+local avatar2 = nil
+local goon_avatar = nil
 
 function love.load()
   require "animation"
@@ -37,8 +40,10 @@ function love.load()
   Moan.font = love.graphics.newFont("Pixel_NES.otf", 20)
   Moan.typeSound = love.audio.newSource("sfx/typeSound.wav", "static")
   Moan.typeSound:setVolume(0.1)
+
   avatar = love.graphics.newImage("stills/player_dialogue2.png")
   avatar2 = love.graphics.newImage("stills/queen_dialogue.png")
+  goon_avatar = love.graphics.newImage("stills/goon_dialogue.png")
 
   hypno_spiral = require("hypno_spiral")
   soundboard = require("soundboard")
@@ -132,8 +137,8 @@ function love.draw()
     end
 
     draw_status_bar()
-
     Moan.draw()
+
   elseif game_state == "CUTSCENE" then
     local frame_indices = {1, 2, 3, 4,
                            1, 2, 3, 4,
@@ -151,6 +156,7 @@ function love.draw()
     player.pchypnoboth_sheet.draw_big(player.pchypnoboth_sheet, timer,
                                       200, 300,
                                       frame_indices)
+    Moan.draw()
   end
 end
 
@@ -183,6 +189,8 @@ function love.keypressed(key)
     introtext_keypressed(key)
   elseif game_state == "LEVEL_INTRO" then
     level_intro_keypressed(key)
+  elseif game_state == "CUTSCENE" then
+    cutscene_keypressed(key)
   end
 end
 
@@ -235,8 +243,17 @@ function gameplay_keypressed(key)
   end
   if key == "4" then
     game_state = "CUTSCENE"
+    Moan.speak("GOON",
+               {"You'll never get me to talk, QUEEN TITNOTICA!",
+                "Not even your irresistible hypnotic breasts will get me to "
+                .. "betray King Bloodothy!",},
+                {image=goon_avatar})
+    Moan.speak("QUEEN TITNOTICA",
+               {"Which motion is pulling you into trance more quickly?",
+               "Is it the rotation?",
+               "Or is it the jiggling?"},
+               {image=avatar})
   end
-
 end
 
 function splash_keypressed(key)
@@ -262,6 +279,15 @@ function level_intro_keypressed(key)
   end
 end
 
+function cutscene_keypressed(key)
+  if key == 'return' then
+    game_state = "LEVEL_INTRO"
+    player.x = Scaling:get_width() / 2
+    player.y = Scaling:get_height() / 2
+    song:play()
+  end
+end
+
 function love.update(dt)
   timer = timer + dt * 10.0
 
@@ -269,6 +295,8 @@ function love.update(dt)
     gameplay_update(dt)
   elseif game_state == "LEVEL_INTRO" then
     stage.update(stage, dt)
+  elseif game_state == "CUTSCENE" then
+    cutscene_update(dt)
   elseif game_state == "THANKYOU" then
     HypnoSpiral:update(dt)
     stage.update(stage, dt)
@@ -319,6 +347,14 @@ function draw_status_bar()
     for i=1,player.will do
       love.graphics.circle("fill", 180 + (30 * i), 1155, 10, 8)
     end
+end
+
+function cutscene_update(dt)
+  stage.update(stage, dt)
+  Moan.update(dt)
+  if Moan.showingMessage then
+    return
+  end
 end
 
 function gameplay_update(dt)
